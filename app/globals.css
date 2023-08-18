@@ -76,5 +76,5 @@
 }
 
 .head-text{
-  @apply font-bold text-[30px] text-white
+  @apply font-bold text-[30px] text-textColor
 }

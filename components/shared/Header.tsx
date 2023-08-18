@@ -4,12 +4,13 @@ import Image from 'next/image'
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import MenuProfile from "./MenuProfile";
+import { Button } from "../ui/button";
 const Header = async  () => {
 	const session = await getServerSession(authOptions)
 	// console.log(session);
 	
 	return (
-		<nav className="bg-gray-400 p-4">
+		<nav className=" p-4 border-b border-borderColor">
 			<div className="container mx-auto">
 				{/* Desktop Version	*/}
 				<div className="flex justify-between items-center">
@@ -23,7 +24,6 @@ const Header = async  () => {
 					</div>
 					{session ? (
 						<>
-							
 							<MenuProfile
 								name={session?.user?.name || "John Doe"}
 								image={
@@ -35,12 +35,13 @@ const Header = async  () => {
 					) : (
 						<>
 							<div className="flex items-center gap-3">
-								<button>
+								<Button>
 									<Link href="/signin">Sign In</Link>
-								</button>
-								<button>
+								</Button>
+								<Button variant={"secondary"}>
 									<Link href="/signup">Sign Up</Link>
-								</button>
+								</Button>
+								
 							</div>
 						</>
 					)}
