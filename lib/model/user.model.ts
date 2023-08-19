@@ -11,7 +11,6 @@ const userSchema = new Schema({
     password: {
         type: String,
         minlength: [6, 'Password must be at least 5 characters long'],
-        required:true
     },
     image: String,
     role: {

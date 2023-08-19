@@ -4,6 +4,7 @@ import { AiOutlineGoogle, AiOutlineGithub } from "react-icons/ai";
 import { Button } from "../ui/button";
 
 const SignIn = () => {
+	
 	return (
 		<div className="flex flex-col gap-5 justify-center">
 			<h1 className="head-text text-center">Sign In</h1>

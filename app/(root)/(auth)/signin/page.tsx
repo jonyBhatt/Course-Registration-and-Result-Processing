@@ -7,7 +7,6 @@ interface Props{
 }
 
 const Page = () => {
-	// console.log({props}
 	
 	
 	return (

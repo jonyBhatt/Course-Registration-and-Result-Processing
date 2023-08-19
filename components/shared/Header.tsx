@@ -10,7 +10,7 @@ const Header = async  () => {
 	// console.log(session);
 	
 	return (
-		<nav className=" p-4 border-b border-borderColor">
+		<nav className=" py-4 border-b border-borderColor">
 			<div className="container mx-auto">
 				{/* Desktop Version	*/}
 				<div className="flex justify-between items-center">
@@ -41,7 +41,7 @@ const Header = async  () => {
 								<Button variant={"secondary"}>
 									<Link href="/signup">Sign Up</Link>
 								</Button>
-								
+								<Link href="/dashboard">Dashboard</Link>
 							</div>
 						</>
 					)}
