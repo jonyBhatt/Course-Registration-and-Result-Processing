@@ -8,8 +8,8 @@ const Page = async() => {
   // console.log(session.user);
   
   return (
-    <div className='container mx-auto'>
-      <h1 className='head-text'>Profile</h1>
+    <div className=''>
+      {/* <h1 className='head-text'>Profile</h1> */}
       <ProfileComponent user={session?.user} />
     </div>
   )
