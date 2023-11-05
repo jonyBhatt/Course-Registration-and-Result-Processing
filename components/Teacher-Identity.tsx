@@ -60,7 +60,7 @@ const TeacherIdentityForm = ({ user }: User) => {
     // ✅ This will be type-safe and validated.
     console.log(values);
     try {
-      const res = await axios.post("/api/onboard", values);
+      const res = await axios.post("/api/onboard/teacher-onboard", values);
       console.log(res.data);
     } catch (error) {
       console.log(error);

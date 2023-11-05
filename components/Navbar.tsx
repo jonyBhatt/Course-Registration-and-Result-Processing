@@ -2,11 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 
-import { signOut } from "next-auth/react";
-import Modal from "./Modal";
-
 const Navbar = async () => {
-
   return (
     <nav className="py-5 shadow-md dark:shadow-slate-600">
       <div className="container mx-auto sm:px-6">

@@ -20,22 +20,24 @@ model User {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   email      String   @unique
   name       String
-  password   String
+  password   String?
   role       UserType @default(STUDENT)
   image_url  String?
   department String
+  onboarded Boolean @default(false)
 }
 
 model Teacher {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  firstname  String
-  lastname   String
-  email      String   @unique
-  position   String
-  department String
-  courses    Course[]
-  role       UserType @default(TEACHER)
-  imageurl   String
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  firstname     String
+  lastname      String
+  email         String         @unique
+  position      String
+  department    String
+  courses       Course[]
+  role          UserType       @default(TEACHER)
+  imageurl      String
+  announcements Announcement[]
 }
 
 model Course {
@@ -48,4 +50,35 @@ model Course {
 
   teacherEmail String
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])
+
+  announcements Announcement[]
+  assignments    Assignment[]
+}
+
+model Announcement {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacherEmail String
+  teacher      Teacher @relation(fields: [teacherEmail], references: [email])
+
+  courseName String
+  course     Course @relation(fields: [courseName], references: [name])
+
+}
+
+model Assignment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title       String
+  description String
+  dueDate     DateTime
+  // Other fields related to an assignment
+
+  // Define a foreign key relationship to the Course model
+  courseId String @db.ObjectId
+  course   Course @relation(fields: [courseId], references: [id])
 }

@@ -17,7 +17,7 @@ export const LeftBar = [
   },
   {
     imageUrl: "/notice.svg",
-    route: "/teacher-dashboard/assignment",
+    route: "/teacher-dashboard/announcement",
     label: "Announcement",
   },
   {

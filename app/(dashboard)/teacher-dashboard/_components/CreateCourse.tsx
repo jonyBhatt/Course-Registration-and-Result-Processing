@@ -4,6 +4,8 @@ import * as z from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,7 +19,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import UploadFile from "@/components/UploadFiles";
-import axios from "axios";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -28,6 +29,7 @@ const formSchema = z.object({
 });
 
 const CreateCourseForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,6 +46,8 @@ const CreateCourseForm = () => {
     try {
       const res = await axios.post("/api/teacher/create-course", values);
       console.log(res.data);
+      form.reset();
+      router.push("/teacher-dashboard");
     } catch (error) {
       console.log(error);
     }
