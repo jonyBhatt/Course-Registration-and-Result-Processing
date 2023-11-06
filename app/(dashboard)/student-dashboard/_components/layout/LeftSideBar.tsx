@@ -1,4 +1,4 @@
-import { LeftBar } from "@/constants/TeacherLeftBar";
+import { LeftBar } from "@/constants/StudentLeftBar";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -13,9 +13,9 @@ const LeftSideBar = () => {
               <Link
                 href={item.route}
                 key={item.label}
-                className="relative flex justify-start gap-4 rounded-lg p-4"
+                className="relative flex justify-start gap-4 items-center rounded-lg p-4"
               >
-                <Image src={item.imageUrl} alt="img" width={30} height={30} />
+                <Image src={item.imageUrl} alt="img" width={35} height={35} />
                 <p className="max-lg:hidden">{item.label}</p>
               </Link>
             );

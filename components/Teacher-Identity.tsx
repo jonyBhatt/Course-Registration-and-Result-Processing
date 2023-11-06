@@ -158,7 +158,7 @@ const TeacherIdentityForm = ({ user }: User) => {
 
         <FormField
           control={form.control}
-          name="position"
+          name="department"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Department</FormLabel>

@@ -21,7 +21,7 @@ model User {
   email      String   @unique
   name       String
   password   String?
-  role       UserType @default(STUDENT)
+  role       UserType
   image_url  String?
   department String
   onboarded  Boolean  @default(false)
@@ -39,6 +39,27 @@ model Teacher {
   imageurl      String
   announcements Announcement[]
   assignments   Assignment[]
+}
+
+model Student {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName   String
+  lastName    String
+  email       String   @unique
+  studentId   String   @unique
+  dateOfBirth String
+  gender      String
+  phoneNumber String?
+  address     String?
+  department String
+  imageUrl String
+
+  // Relationships
+
+  // ... Add more relationships as needed
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model Course {
@@ -80,7 +101,7 @@ model Assignment {
 
   // Define a foreign key relationship to the Course model
   courseName String
-  course   Course @relation(fields: [courseName], references: [name])
+  course     Course @relation(fields: [courseName], references: [name])
 
   teacherEmail String
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])

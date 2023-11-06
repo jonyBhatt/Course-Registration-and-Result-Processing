@@ -1,8 +1,7 @@
 import React from "react";
-import Header from "../student-dashboard/_components/layout/Header";
-import LeftSideBar from "./_components/LeftSideBar";
-import RightSideBar from "./_components/RightSideBar";
-export default function TeacherLayout({
+import { Header, LeftSideBar, RightSideBar } from "./_components/layout";
+
+export default function StudentLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -15,7 +14,7 @@ export default function TeacherLayout({
         <main className="main-container">
           <div className="max-w-4xl w-full">{children}</div>
         </main>
-        <RightSideBar/>
+        <RightSideBar />
       </section>
     </>
   );
