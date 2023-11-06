@@ -75,7 +75,7 @@ export const columns: ColumnDef<AnnouncementProps>[] = [
 
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
+      const announcement = row.original;
 
       return (
         <DropdownMenu>
@@ -88,13 +88,13 @@ export const columns: ColumnDef<AnnouncementProps>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(announcement.title)}
             >
-              Copy payment ID
+              Copy announcement title
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

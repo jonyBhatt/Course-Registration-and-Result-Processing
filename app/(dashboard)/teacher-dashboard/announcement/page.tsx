@@ -11,9 +11,15 @@ import {
 } from "@/components/ui/dialog";
 import CreateAnnouncement from "../_components/create-announcement";
 import { AnnouncementProps } from "@/types";
+import axios from "axios";
+import AllAnnouncements from "../_components/AllAnouncements";
 
-async function getData(): Promise<AnnouncementProps[]> {
+// const data = signal([]);
+
+async function getData() {
   // Fetch data from your API here.
+  
+
   return [
     {
       title: "Algorithm",
@@ -44,6 +50,8 @@ async function getData(): Promise<AnnouncementProps[]> {
 
 const Announcement = async () => {
   const data = await getData();
+  // console.log(data);
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -65,7 +73,8 @@ const Announcement = async () => {
       </div>
       <div className="">
         <div className="container mx-auto py-10">
-          <DataTable columns={columns} data={data} />
+          {/* <DataTable columns={columns} data={data} /> */}
+          <AllAnnouncements />
         </div>
       </div>
     </div>

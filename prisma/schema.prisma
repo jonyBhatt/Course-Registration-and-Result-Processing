@@ -24,7 +24,7 @@ model User {
   role       UserType @default(STUDENT)
   image_url  String?
   department String
-  onboarded Boolean @default(false)
+  onboarded  Boolean  @default(false)
 }
 
 model Teacher {
@@ -38,6 +38,7 @@ model Teacher {
   role          UserType       @default(TEACHER)
   imageurl      String
   announcements Announcement[]
+  assignments   Assignment[]
 }
 
 model Course {
@@ -52,7 +53,7 @@ model Course {
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])
 
   announcements Announcement[]
-  assignments    Assignment[]
+  assignments   Assignment[]
 }
 
 model Announcement {
@@ -67,7 +68,6 @@ model Announcement {
 
   courseName String
   course     Course @relation(fields: [courseName], references: [name])
-
 }
 
 model Assignment {
@@ -75,10 +75,13 @@ model Assignment {
 
   title       String
   description String
-  dueDate     DateTime
+  dueDate     String
   // Other fields related to an assignment
 
   // Define a foreign key relationship to the Course model
-  courseId String @db.ObjectId
-  course   Course @relation(fields: [courseId], references: [id])
+  courseName String
+  course   Course @relation(fields: [courseName], references: [name])
+
+  teacherEmail String
+  teacher      Teacher @relation(fields: [teacherEmail], references: [email])
 }
