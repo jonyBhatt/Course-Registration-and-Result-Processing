@@ -14,3 +14,12 @@ export type AssignmentProps = {
   courseName: string;
   dueDate: any;
 };
+
+export type CourseProps = {
+  id: string;
+  name: string;
+  description: string;
+  attachment: string;
+  syllabus: string;
+  coursecode: string;
+};

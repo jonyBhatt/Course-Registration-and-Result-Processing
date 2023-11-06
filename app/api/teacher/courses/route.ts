@@ -3,11 +3,7 @@ import { currentUser } from "@clerk/nextjs";
 
 export async function GET() {
   const user = await currentUser();
-  const courses = await prisma.course.findMany({
-    where: {
-      teacherEmail:user?.emailAddresses[0].emailAddress
-    },
-  });
+  const courses = await prisma.course.findMany();
 
   if (!courses) {
     return Response.json("No courses yet");
