@@ -4,12 +4,18 @@ import axios from "axios";
 import { AssignmentProps } from "@/types";
 import { ChangeTime } from "@/lib/timeFormat";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 const Assignments = () => {
   const [data, setData] = useState([]);
   const getData = async () => {
     const res = await axios.get("/api/teacher/assignment");
     console.log(res.data);
     setData(res.data.assignments);
+  };
+
+  const handleDelete = async (id: string) => {
+    const res = await axios.delete(`/api/teacher/assignment/${id}`);
+    console.log(res.data);
   };
 
   useEffect(() => {
@@ -32,8 +38,16 @@ const Assignments = () => {
             </div>
             <span>{ctx.description}</span>
             <div className="flex justify-center items-center gap-4">
-              <Button size="sm">Edit</Button>
-              <Button size="sm" variant={"destructive"}>
+              <Button size="sm">
+                <Link href={`/teacher-dashboard/assignment/edit?id=${ctx.id}`}>
+                  Edit
+                </Link>
+              </Button>
+              <Button
+                size="sm"
+                variant={"destructive"}
+                onClick={() => handleDelete(ctx.id)}
+              >
                 Delete
               </Button>
             </div>
