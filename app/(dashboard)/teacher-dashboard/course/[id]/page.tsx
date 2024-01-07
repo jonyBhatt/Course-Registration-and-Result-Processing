@@ -1,12 +1,12 @@
-import React from 'react'
-import SingleCourseForm from '../../_components/SingleCourseForm'
+import React from "react";
+import SingleCourseForm from "../../_components/SingleCourseForm";
 
-const Course = () => {
+const Course = ({ params }: { params: { id: string } }) => {
   return (
-      <div>
-          <SingleCourseForm />
+    <div>
+      <SingleCourseForm id={params.id} />
     </div>
-  )
-}
+  );
+};
 
-export default Course
+export default Course;

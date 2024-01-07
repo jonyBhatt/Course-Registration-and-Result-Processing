@@ -6,20 +6,16 @@ export const LeftBar = [
   },
 
   {
-    imageUrl: "/user.svg",
-    route: "/teacher-dashboard/students",
-    label: "Students",
+    imageUrl: "/book.svg",
+    route: "/teacher-dashboard/course",
+    label: "Course",
   },
   {
-    imageUrl: "/assignment.svg",
-    route: "/teacher-dashboard/assignment",
-    label: "Assignment",
+    imageUrl: "/blog.svg",
+    route: "/teacher-dashboard/blog",
+    label: "Blog",
   },
-  {
-    imageUrl: "/notice.svg",
-    route: "/teacher-dashboard/announcement",
-    label: "Announcement",
-  },
+
   {
     imageUrl: "/settings.svg",
     route: "/teacher-dashboard/settings",
