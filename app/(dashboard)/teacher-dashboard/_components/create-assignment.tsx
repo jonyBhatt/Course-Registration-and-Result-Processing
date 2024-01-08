@@ -26,8 +26,9 @@ import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import axios from "axios";
+import { toast } from "sonner";
 
-const AssignmentForm = () => {
+const AssignmentForm = ({ id }: { id: string }) => {
   const form = useForm<z.infer<typeof assignmentSchema>>({
     resolver: zodResolver(assignmentSchema),
     defaultValues: {
@@ -39,10 +40,16 @@ const AssignmentForm = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof assignmentSchema>) {
-    const res = await axios.post("/api/teacher/assignment/create", values);
-    console.log(res.data);
-    console.log(values);
-    form.reset()
+    try {
+      console.log(values);
+      const res = await axios.post(`/api/teacher/assignment/${id}`, values);
+      console.log(res.data);
+      toast.success("Assignment Created");
+      form.reset();
+    } catch (error) {
+      console.log(error);
+      toast.error("Something wrong with create assignment");
+    }
   }
   return (
     <Form {...form}>
@@ -139,7 +146,9 @@ const AssignmentForm = () => {
             />
           </div>
         </div>
-        <Button size={"lg"} className="w-full">Create</Button>
+        <Button size={"lg"} className="w-full">
+          Create
+        </Button>
       </form>
     </Form>
   );

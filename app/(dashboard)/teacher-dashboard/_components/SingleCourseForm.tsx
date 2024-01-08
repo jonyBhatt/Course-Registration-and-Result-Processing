@@ -19,6 +19,8 @@ import UploadFile from "@/components/UploadFiles";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -115,7 +117,7 @@ const SingleCourseForm = ({ id }: { id: string }) => {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 sm:grid-cols-1 gap-x-3 gap-y-4 place-content-center">
+          <div className="grid md:grid-cols-2  sm:grid-cols-1 gap-x-3 gap-y-4 ">
             <FormField
               control={form.control}
               name="name"
@@ -143,53 +145,70 @@ const SingleCourseForm = ({ id }: { id: string }) => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Describe your course" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="syllabus"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Syllabus</FormLabel>
-                  <FormControl>
-                    <UploadFile
-                      endpoint="pdfUpload"
-                      onChange={field.onChange}
-                      value={field.value}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="attachment"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Attachment</FormLabel>
-                  <FormControl>
-                    <UploadFile
-                      endpoint="multiUpload"
-                      onChange={field.onChange}
-                      value={field.value}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="flex flex-col  gap-16">
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Describe your course" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex items-center gap-4 sm:flex-col md:flex-row">
+                <Link href={`/teacher-dashboard/assignment/${data.id}`}>
+                  <Button size="lg">
+                    Assignment
+                    <Plus />
+                  </Button>
+                </Link>
+                <Button size="lg">
+                  Announcement
+                  <Plus />
+                </Button>
+              </div>
+
+              <div className="flex items-center gap-16 ">
+                <FormField
+                  control={form.control}
+                  name="syllabus"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Syllabus</FormLabel>
+                      <FormControl>
+                        <UploadFile
+                          endpoint="pdfUpload"
+                          onChange={field.onChange}
+                          value={field.value}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="attachment"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Attachment</FormLabel>
+                      <FormControl>
+                        <UploadFile
+                          endpoint="multiUpload"
+                          onChange={field.onChange}
+                          value={field.value}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <Button type="submit" size="lg">

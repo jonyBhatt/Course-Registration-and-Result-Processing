@@ -87,8 +87,8 @@ model Announcement {
   teacherEmail String
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])
 
-  courseName String
-  course     Course @relation(fields: [courseName], references: [name])
+  courseId String @db.ObjectId
+  course     Course @relation(fields: [courseId], references: [id])
 }
 
 model Assignment {
@@ -100,8 +100,8 @@ model Assignment {
   // Other fields related to an assignment
 
   // Define a foreign key relationship to the Course model
-  courseName String
-  course     Course @relation(fields: [courseName], references: [name])
+ courseId String @db.ObjectId
+  course     Course @relation(fields: [courseId], references: [id])
 
   teacherEmail String
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])

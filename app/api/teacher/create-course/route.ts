@@ -1,6 +1,6 @@
 import prisma from "@/lib/db/connectDB";
 import { currentUser } from "@clerk/nextjs";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const user = await currentUser();
@@ -8,24 +8,22 @@ export async function POST(request: NextRequest) {
   const { name, coursecode, description, syllabus, attachment } = body;
 
   try {
-    const newCourse = await prisma.teacher.update({
-      where: {
-        email:user?.emailAddresses[0].emailAddress
-      },
+    const newCourse = await prisma.course.create({
       data: {
-        courses: {
-          create: {
-            name,
-            coursecode,
-            description,
-            syllabus,
-            attachment,
+        name,
+        coursecode,
+        description,
+        syllabus,
+        attachment,
+        teacher: {
+          connect: {
+            email: user?.emailAddresses[0].emailAddress,
           },
         },
       },
     });
 
-    return Response.json({ success: true, newCourse}, { status: 201 });
+    return new NextResponse("Course created", { status: 201 });
   } catch (error) {
     return Response.json(
       { success: false, message: `${error}` },
@@ -33,4 +31,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import UploadFile from "@/components/UploadFiles";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -46,10 +47,12 @@ const CreateCourseForm = () => {
     try {
       const res = await axios.post("/api/teacher/create-course", values);
       console.log(res.data);
+      toast.success(res.data);
       form.reset();
       router.push("/teacher-dashboard");
     } catch (error) {
       console.log(error);
+      toast.error("Something wrong to create course");
     }
     console.log(values);
   }

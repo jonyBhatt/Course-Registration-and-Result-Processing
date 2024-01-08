@@ -1,14 +1,15 @@
-import prisma from "@/lib/db/connectDB";
 import { NextRequest, NextResponse } from "next/server";
+import { currentUser } from "@clerk/nextjs";
+import prisma from "@/lib/db/connectDB";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
-  const assignments = await prisma.assignment.findUnique({
+  const assignments = await prisma.assignment.findMany({
     where: {
-      id,
+      courseId: id,
     },
   });
 
@@ -20,20 +21,32 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
+  const teacher = await currentUser();
   let body = await req.json();
 
   const { courseName, description, title, date } = body;
 
+  //teacher is not then return unauthorized
+  if (!teacher || !teacher.id) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
   try {
-    await prisma.assignment.update({
-      where: {
-        id,
-      },
+    const createAssignment = await prisma.assignment.create({
       data: {
         title,
         description,
-        courseName,
         dueDate: date,
+        teacher: {
+          connect: {
+            email: teacher.emailAddresses[0].emailAddress,
+          },
+        },
+        course: {
+          connect: {
+            id,
+          },
+        },
       },
     });
     return NextResponse.json({ success: true }, { status: 200 });

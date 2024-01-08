@@ -5,27 +5,52 @@ import { AssignmentProps } from "@/types";
 import { ChangeTime } from "@/lib/timeFormat";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-const Assignments = () => {
-  const [data, setData] = useState([]);
-  const getData = async () => {
-    const res = await axios.get("/api/teacher/assignment");
-    console.log(res.data);
-    setData(res.data.assignments);
-  };
+import { useQuery } from "@tanstack/react-query";
+const getAssignment = (id: string) => {
+  return fetch(`/api/teacher/assignment/${id}`, {
+    cache: "no-store",
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Failed!");
+      }
+
+      return res.json();
+    })
+    .catch((error) => {
+      console.error(error);
+      // Handle the error as needed
+    });
+};
+const Assignments = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+
+  // const [data, setData] = useState([]);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["assignments"],
+    queryFn: () => getAssignment(id),
+  });
 
   const handleDelete = async (id: string) => {
     const res = await axios.delete(`/api/teacher/assignment/${id}`);
     console.log(res.data);
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
+  if (isPending) return "Loading...";
+
+  if (error) return "Something wrong cannot fetch assignment.." + error.message;
+  if (data.length <= 0) return "No assignment yet!";
+
+  console.log(data);
 
   return (
     <div className="">
       <div className=" grid grid-cols-2  gap-x-4 lg:grid-cols-4 gap-y-8  ">
-        {data.map((ctx: AssignmentProps) => (
+        {data.assignments.map((ctx: AssignmentProps) => (
           <div
             key={ctx.id}
             className="p-4 bg-gray-200 rounded-lg flex flex-col gap-4  "
@@ -37,7 +62,7 @@ const Assignments = () => {
               </span>
             </div>
             <span>{ctx.description}</span>
-            <div className="flex justify-center items-center gap-4">
+            <div className="flex justify-start items-center gap-4">
               <Button size="sm">
                 <Link href={`/teacher-dashboard/assignment/edit?id=${ctx.id}`}>
                   Edit

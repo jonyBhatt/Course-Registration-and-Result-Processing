@@ -23,6 +23,7 @@ export default function RootLayout({
         <ClerkProvider>
           <ClientProvider>{children}</ClientProvider>
         </ClerkProvider>
+
         <Toaster richColors />
       </body>
     </html>
