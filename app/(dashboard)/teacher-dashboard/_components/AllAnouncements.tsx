@@ -5,18 +5,18 @@ import axios from "axios";
 import { columns } from "@/components/DataTable/cloumn";
 import { DataTable } from "@/components/DataTable/data-table";
 
-const AllAnnouncements = () => {
+const AllAnnouncements = ({ id }: { id: string }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
-      let res = await axios.get("/api/teacher/announcement");
+      let res = await axios.get(`/api/teacher/announcement/${id}`);
       console.log(res.data);
       setData(res.data);
     };
 
     getData();
-  }, []);
+  }, [id]);
 
   return (
     <div>

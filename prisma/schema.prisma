@@ -39,27 +39,28 @@ model Teacher {
   imageurl      String
   announcements Announcement[]
   assignments   Assignment[]
+  reports       Report[]
 }
 
 model Student {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   firstName   String
   lastName    String
-  email       String   @unique
-  studentId   String   @unique
+  email       String  @unique
+  studentId   String  @unique
   dateOfBirth String
   gender      String
   phoneNumber String?
   address     String?
-  department String
-  imageUrl String
+  department  String
+  imageUrl    String
 
   // Relationships
 
   // ... Add more relationships as needed
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Course {
@@ -88,7 +89,7 @@ model Announcement {
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])
 
   courseId String @db.ObjectId
-  course     Course @relation(fields: [courseId], references: [id])
+  course   Course @relation(fields: [courseId], references: [id])
 }
 
 model Assignment {
@@ -97,11 +98,19 @@ model Assignment {
   title       String
   description String
   dueDate     String
-  // Other fields related to an assignment
+  courseId    String @db.ObjectId
+  course      Course @relation(fields: [courseId], references: [id])
 
-  // Define a foreign key relationship to the Course model
- courseId String @db.ObjectId
-  course     Course @relation(fields: [courseId], references: [id])
+  teacherEmail String
+  teacher      Teacher @relation(fields: [teacherEmail], references: [email])
+}
+
+model Report {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  s_id    String
+  reason  String
+  details String
 
   teacherEmail String
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])

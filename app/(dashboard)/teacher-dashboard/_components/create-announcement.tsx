@@ -17,48 +17,35 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const CreateAnnouncement = () => {
+const CreateAnnouncement = ({ id }: { id: string }) => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (values: z.infer<typeof announcementSchema>) =>
+      await axios.post(`/api/teacher/announcement/${id}`, values),
+    onSuccess: () => {
+      toast.success("Announcement create successful");
+      form.reset();
+      queryClient.invalidateQueries({ queryKey: ["announcements"] });
+    },
+    onError: () => {
+      toast.error("Something wrong");
+    },
+  });
   const form = useForm<z.infer<typeof announcementSchema>>({
     resolver: zodResolver(announcementSchema),
     defaultValues: {
-      courseName: "",
       content: "",
       title: "",
     },
   });
-
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof announcementSchema>) {
-    try {
-      const res = await axios.post("/api/teacher/announcement/create", values);
-      alert(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-    console.log(values);
-  }
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form className="space-y-8">
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-              <FormField
-                control={form.control}
-                name="courseName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Course Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="course name" {...field} />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
             <div className="sm:col-span-3">
               <FormField
                 control={form.control}
@@ -96,7 +83,13 @@ const CreateAnnouncement = () => {
               />
             </div>
           </div>
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            onClick={() => mutate(form.getValues())}
+            isPending={isPending}
+          >
+            Submit
+          </Button>
         </form>
       </Form>
     </div>

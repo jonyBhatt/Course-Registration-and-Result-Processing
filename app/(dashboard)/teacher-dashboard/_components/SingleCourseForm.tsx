@@ -166,10 +166,12 @@ const SingleCourseForm = ({ id }: { id: string }) => {
                     <Plus />
                   </Button>
                 </Link>
-                <Button size="lg">
-                  Announcement
-                  <Plus />
-                </Button>
+                <Link href={`/teacher-dashboard/announcement/${data.id}`}>
+                  <Button size="lg">
+                    Announcement
+                    <Plus />
+                  </Button>
+                </Link>
               </div>
 
               <div className="flex items-center gap-16 ">
