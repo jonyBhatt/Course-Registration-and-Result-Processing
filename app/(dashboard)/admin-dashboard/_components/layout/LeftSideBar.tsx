@@ -1,5 +1,5 @@
 "use client";
-import { LeftBar } from "@/constants/StudentLeftBar";
+import { LeftBar } from "@/constants/AdminLeftBar";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

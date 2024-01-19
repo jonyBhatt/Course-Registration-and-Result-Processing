@@ -16,6 +16,16 @@ enum UserType {
   TEACHER
 }
 
+enum Status {
+  APPROVED
+  PENDING
+}
+
+enum SubmissionStatus {
+  DONE
+  PENDING
+}
+
 model User {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   email      String   @unique
@@ -59,8 +69,11 @@ model Student {
 
   // ... Add more relationships as needed
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+  enrollment  Enrollment[]
+  courses     Course[]
+  submissions Submission[]
 }
 
 model Course {
@@ -74,8 +87,12 @@ model Course {
   teacherEmail String
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])
 
+  studentEmail String?
+  student      Student? @relation(fields: [studentEmail], references: [email])
+
   announcements Announcement[]
   assignments   Assignment[]
+  enrollment    Enrollment[]
 }
 
 model Announcement {
@@ -102,7 +119,25 @@ model Assignment {
   course      Course @relation(fields: [courseId], references: [id])
 
   teacherEmail String
-  teacher      Teacher @relation(fields: [teacherEmail], references: [email])
+  teacher      Teacher      @relation(fields: [teacherEmail], references: [email])
+  submissions  Submission[]
+}
+
+model Submission {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Reference to the assignment for which this submission is made
+  assignmentId String     @db.ObjectId
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+
+  // Details about the submission (you can extend this as needed)
+  studentEmail String
+  student      Student @relation(fields: [studentEmail], references: [email])
+
+  // Additional fields related to the submission, e.g., submissionDate, status, etc.
+  submissionDate DateTime?        @default(now())
+  submission     String
+  status         SubmissionStatus @default(PENDING)
 }
 
 model Report {
@@ -114,4 +149,27 @@ model Report {
 
   teacherEmail String
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])
+}
+
+model Enrollment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  studnetEmail String
+  courseId     String   @db.ObjectId // Assuming courseId is a string, adjust data type as needed
+  status       Status   @default(PENDING) // You might want to use an enum for status (e.g., 'pending', 'approved')
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  stundets     Student  @relation(fields: [studnetEmail], references: [email])
+  course       Course   @relation(fields: [courseId], references: [id])
+}
+
+model Faculty {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  image       String
+  name        String
+  email       String
+  gender      String
+  department  String
+  designation String
+  address     String
 }

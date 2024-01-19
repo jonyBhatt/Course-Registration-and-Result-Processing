@@ -18,7 +18,7 @@ export default function UploadFile({
   const fileType = value?.split(".").pop();
   if (value && fileType !== "pdf") {
     return (
-      <div className="h-20 w-20 relative">
+      <div className=" w-20 relative">
         <Image src={value} alt="server image" className="rounded-full" fill />
         <button
           className="bg-red-500 text-white p-1 absolute top-0 right-0 shadow-sm rounded-full"

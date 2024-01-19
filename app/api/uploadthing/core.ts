@@ -2,12 +2,11 @@ import { currentUser } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
- const loggedUser = async() => await currentUser();
+const loggedUser = async () => await currentUser();
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
- 
   // Define as many FileRoutes as you like, each with a unique routeSlug
-  imageUploader: f({ image: { maxFileSize: "4MB" } })
+  imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
     .middleware(async () => {
       const user = await loggedUser();
       if (!user) throw new Error("Unauthorized");
@@ -21,7 +20,7 @@ export const ourFileRouter = {
     }),
   pdfUpload: f({ pdf: { maxFileCount: 1, maxFileSize: "8MB" } })
     .middleware(async () => {
-      const user =await loggedUser();
+      const user = await loggedUser();
       if (!user) throw new Error("Unauthorized");
 
       return { userId: user.id };

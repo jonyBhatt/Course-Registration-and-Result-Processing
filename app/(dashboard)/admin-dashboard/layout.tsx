@@ -12,7 +12,7 @@ export default function StudentLayout({
       <section className="flex flex-row">
         <LeftSideBar />
         <main className="main-container">
-          <div className="max-w-4xl w-full">{children}</div>
+          <div className=" w-full">{children}</div>
         </main>
       </section>
     </>
