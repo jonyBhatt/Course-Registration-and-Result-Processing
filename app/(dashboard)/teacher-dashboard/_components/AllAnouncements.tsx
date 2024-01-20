@@ -10,7 +10,7 @@ const AllAnnouncements = ({ id }: { id: string }) => {
 
   useEffect(() => {
     const getData = async () => {
-      let res = await axios.get(`/api/teacher/announcement/${id}`);
+      let res = await axios.get(`/api/teacher/announcement/all/${id}`);
       console.log(res.data);
       setData(res.data);
     };

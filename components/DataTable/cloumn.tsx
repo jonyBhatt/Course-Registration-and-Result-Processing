@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/dialog";
 
 import { AnnouncementProps } from "@/types";
+import EditAnnouncement from "@/app/(dashboard)/teacher-dashboard/_components/edit-announcement";
+import axios from "axios";
+import { toast } from "sonner";
 export const columns: ColumnDef<AnnouncementProps>[] = [
   // ...
 
@@ -61,7 +64,14 @@ export const columns: ColumnDef<AnnouncementProps>[] = [
     cell: ({ row }) => {
       // const params = useParams()
       const announcement = row.original;
-
+      const handleDelete = async (id: string) => {
+        try {
+          await axios.delete(`/api/teacher/announcement/${id}`);
+          toast.success("Delete announcement");
+        } catch (error) {
+          console.log(error);
+        }
+      };
       return (
         <div className="flex items-center gap-4">
           <Dialog>
@@ -72,9 +82,14 @@ export const columns: ColumnDef<AnnouncementProps>[] = [
               <DialogHeader>
                 <DialogTitle>Update Announcement</DialogTitle>
               </DialogHeader>
+              <EditAnnouncement id={announcement.id} />
             </DialogContent>
           </Dialog>
-          <Button size="lg" variant={"destructive"}>
+          <Button
+            size="lg"
+            variant={"destructive"}
+            onClick={() => handleDelete(announcement.id)}
+          >
             Delete
           </Button>
         </div>

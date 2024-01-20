@@ -23,49 +23,52 @@ const Settings = () => {
           Edit your profile
         </Link>
       </div>
-      <div className="grid grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-2xl">Profile picture:</h3>
-          {data.imageurl ? (
-            <>
-              <Image
-                src={data.imageurl}
-                alt="user"
-                width={80}
-                height={80}
-                className="object-cover rounded-full"
-              />
-            </>
-          ) : (
-            <>
-              <Image
-                src="/image/user.jpg"
-                alt="user"
-                width={80}
-                height={80}
-                className="object-cover rounded-full"
-              />
-            </>
-          )}
-          {/* <Image
+      <div className="flex flex-col gap-2">
+        <h3 className="font-bold text-2xl">Profile picture:</h3>
+        {data.imageurl ? (
+          <>
+            <Image
+              src={data.imageurl}
+              alt="user"
+              width={80}
+              height={80}
+              className="object-cover rounded-full"
+            />
+          </>
+        ) : (
+          <>
+            <Image
+              src="/image/user.jpg"
+              alt="user"
+              width={80}
+              height={80}
+              className="object-cover rounded-full"
+            />
+          </>
+        )}
+        {/* <Image
             src="/image/user.jpg"
             alt="user"
             width={80}
             height={80}
             className="object-cover rounded-full"
           /> */}
+      </div>
+      <div className="flex flex-col gap-4 my-10">
+        <div className="flex flex-col gap-1.5 my-4">
+          <h2 className="font-bold text-xl">Name:</h2>
+          <span className="text-gray-400 text-lg">{data.firstname}</span>
+          {/* <span className="text-gray-400 text-lg">Name</span> */}
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <h2 className="font-bold text-xl">Name:</h2>
-            <span className="text-gray-400 text-lg">{data.firstname}</span>
-            {/* <span className="text-gray-400 text-lg">Name</span> */}
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <h2 className="font-bold text-xl">Email:</h2>
-            <span className="text-gray-400 text-lg">{data.email}</span>
-            {/* <span className="text-gray-400 text-lg">Email</span> */}
-          </div>
+        <div className="flex flex-col gap-1.5 my-4">
+          <h2 className="font-bold text-xl">Email:</h2>
+          <span className="text-gray-400 text-lg">{data.email}</span>
+          {/* <span className="text-gray-400 text-lg">Email</span> */}
+        </div>
+        <div className="flex flex-col gap-1.5 my-4">
+          <h2 className="font-bold text-xl">Department:</h2>
+          <span className="text-gray-400 text-lg">{data.department}</span>
+          {/* <span className="text-gray-400 text-lg">Email</span> */}
         </div>
       </div>
     </div>

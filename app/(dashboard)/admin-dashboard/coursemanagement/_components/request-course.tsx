@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { toast } from "sonner";
 const RequestedCourse = () => {
   const queryClient = useQueryClient();
@@ -22,7 +23,7 @@ const RequestedCourse = () => {
   const { mutate } = useMutation({
     mutationKey: ["updateApproval"],
     mutationFn: (id: string) =>
-      fetch(`/api/admin/enroll/${id}`, { method: "PUT" }),
+      fetch(`/api/admin/enroll/approve/${id}`, { method: "PUT" }),
     onSuccess: () => {
       toast.success("Course Approved");
       queryClient.invalidateQueries({ queryKey: ["approvecourse"] });
@@ -34,6 +35,15 @@ const RequestedCourse = () => {
 
   const handleApprove = (id: string) => {
     mutate(id);
+  };
+
+  const handleCancel = async (id: string) => {
+    try {
+      await axios.put(`/api/admin/enroll/cancel/${id}`);
+      toast.dismiss("Enrollment Cancelled");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (isPending) return <Loader />;
@@ -77,7 +87,12 @@ const RequestedCourse = () => {
                   </>
                 )}
 
-                <Button variant={"destructive"}>Cancel</Button>
+                <Button
+                  variant={"destructive"}
+                  onClick={() => handleCancel(ctx.id)}
+                >
+                  Cancel
+                </Button>
               </TableCell>
             </TableRow>
           ))}

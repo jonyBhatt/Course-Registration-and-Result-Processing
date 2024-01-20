@@ -32,10 +32,12 @@ const formSchema = z.object({
   address: z.string(),
   image: z.string(),
 });
-const UpdateFacultyMember = ({ params }: { params: { id: string } }) => {
+const UpdateFacultyMember = ({ id }: { id: string }) => {
+  console.log(id);
+
   const { data, error, isPending } = useQuery({
-    queryKey: ["getFacultyMember"],
-    queryFn: () => fetch("/api/admin/faculty").then((res) => res.json()),
+    queryKey: ["updateFacultyMember"],
+    queryFn: () => fetch(`/api/admin/faculty/${id}`).then((res) => res.json()),
   });
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,7 +55,7 @@ const UpdateFacultyMember = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     // Update default values when data changes
     form.reset({
-      name: data?.name ?? "",
+      name: data?.name || "",
       email: data?.email || "",
       gender: data?.gender || "",
       department: data?.department || "",
@@ -62,18 +64,17 @@ const UpdateFacultyMember = ({ params }: { params: { id: string } }) => {
       image: data?.image || "",
     });
   }, [data, form]);
-  const { id } = params;
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // try {
-    //   const res = await axios.put(`/api/admin/faculty/${id}`, values);
-    //   console.log(res.data);
-    //   toast.success(res.data);
-    //   form.reset();
-    //   router.push("/admin-dashboard/faculty");
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error("Something wrong to create course");
-    // }
+    try {
+      const res = await axios.put(`/api/admin/faculty/${id}`, values);
+      console.log(res.data);
+      toast.success(res.data);
+      form.reset();
+      router.push("/admin-dashboard/faculty");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something wrong to create course");
+    }
     console.log(values);
   }
   if (isPending) return <Loader />;

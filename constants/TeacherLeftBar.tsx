@@ -10,11 +10,7 @@ export const LeftBar = [
     route: "/teacher-dashboard/course",
     label: "Course",
   },
-  // {
-  //   imageUrl: "/blog.svg",
-  //   route: "/teacher-dashboard/blog",
-  //   label: "Blog",
-  // },
+
   {
     imageUrl: "/report.svg",
     route: "/teacher-dashboard/report",

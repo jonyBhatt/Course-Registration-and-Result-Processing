@@ -5,25 +5,20 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const body = await req.json();
-  const { name, email, image_url } = body;
   const { id } = params;
-
   try {
-    await prisma.user.update({
+    await prisma.enrollment.update({
       where: {
         id,
       },
       data: {
-        name,
-        email,
-        image_url,
+        status: "PENDING",
       },
     });
-    return NextResponse.json("Update Successful", { status: 200 });
+    //make a return api response that course update
+    return new NextResponse("Course Update", { status: 200 });
   } catch (error) {
-    console.log(error);
-
-    return NextResponse.json("Something wrong", { status: 500 });
+    console.log(`Error in API ${error}`);
+    return new Response("Internal Error", { status: 500 });
   }
 }

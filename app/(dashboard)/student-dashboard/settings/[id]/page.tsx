@@ -60,7 +60,7 @@ const UpdateProfile = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     try {
-      const res = await axios.put(`/api/profile/${data?.id}`, values);
+      const res = await axios.put(`/api/student/profile/${data?.id}`, values);
       toast.success(res.data);
       // form.reset()
     } catch (error: any) {

@@ -9,7 +9,7 @@ export async function PUT(
   const { id } = params;
 
   try {
-    await prisma.user.update({
+    await prisma.student.update({
       where: {
         id,
       },

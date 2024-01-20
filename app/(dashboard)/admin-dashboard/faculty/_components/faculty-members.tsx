@@ -17,15 +17,34 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import UpdateFacultyMember from "./update-faculty-member";
+import { toast } from "sonner";
 const FacultyMember = () => {
+  const queryClient = useQueryClient();
+
   const { data, error, isPending } = useQuery({
     queryKey: ["getFacultyMember"],
     queryFn: () => fetch("/api/admin/faculty").then((res) => res.json()),
   });
 
+  const { mutate } = useMutation({
+    mutationKey: ["delMember"],
+    mutationFn: (id: string) =>
+      fetch(`/api/admin/faculty/${id}`, { method: "DELETE" }),
+    onSuccess: () => {
+      toast.success("Faculty member delete");
+      queryClient.invalidateQueries({ queryKey: ["getFacultyMember"] });
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+
+  const handleDelete = (id: string) => {
+    mutate(id);
+  };
   if (isPending) return <Loader />;
   if (error) return "Something error" + error.message;
   console.log(data);
@@ -92,10 +111,16 @@ const FacultyMember = () => {
                     <DialogHeader>
                       <DialogTitle>Update Faculty member</DialogTitle>
                     </DialogHeader>
-                    <UpdateFacultyMember params={ctx.id} />
+                    <UpdateFacultyMember id={ctx.id} />
                   </DialogContent>
                 </Dialog>
-                <Button variant={"destructive"}>Delete</Button>
+                <Button
+                  variant={"destructive"}
+                  onClick={() => handleDelete(ctx.id)}
+                  isPending={isPending}
+                >
+                  Delete
+                </Button>
               </TableCell>
             </TableRow>
           ))}

@@ -19,7 +19,7 @@ const SingleCourse = ({ id }: { id: string }) => {
   const handleDelete = async (id: string) => {
     try {
       const res = await axios.delete(`/api/admin/course/${id}`);
-      router.push("/admin-dashboard/coursmanagement");
+      router.push("/admin-dashboard/coursemanagement");
       console.log(res.data);
 
       toast.success(res.data);

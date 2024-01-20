@@ -29,6 +29,22 @@ export async function DELETE(
 ) {
   const { id } = params;
   try {
+    const enrollments = await prisma.enrollment.findMany({
+      where: {
+        courseId: id,
+      },
+    });
+
+    // Delete related enrollments
+    await Promise.all(
+      enrollments.map(async (enrollment) => {
+        await prisma.enrollment.delete({
+          where: {
+            id: enrollment.id,
+          },
+        });
+      })
+    );
     await prisma.course.delete({
       where: {
         id,
