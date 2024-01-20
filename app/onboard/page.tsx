@@ -17,11 +17,11 @@ const Onboard = async () => {
   });
   if (user?.onboarded === false) return redirect("/onboard");
   if (user?.role === "TEACHER") {
-    return redirect("/teacher-dashboard");
+    return redirect("/teacher-dashboard/course");
   } else if (user?.role === "STUDENT") {
-    return redirect("/student-dashboard");
+    return redirect("/student-dashboard/allcourses");
   } else if (user?.role === "ADMIN") {
-    return redirect("/admin-dashboard");
+    return redirect("/admin-dashboard/coursemanagement");
   }
   return (
     <div className="min-h-screen flex justify-center items-center ">

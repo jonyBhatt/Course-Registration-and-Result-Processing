@@ -6,9 +6,14 @@ import React from "react";
 const Header = () => {
   return (
     <header className="px-4 flex justify-between items-center shadow-md shadow-gray-300 py-4 bg-[#eaeaee]">
-      <div className="w-8 h-8 relative">
+      <div className="w-12 h-12 relative">
         <Link href="/teacher-dashboard">
-          <Image src="/logo.svg" alt="logo" fill className="rounded-full" />
+          <Image
+            src="/image/logo.jpeg"
+            alt="logo"
+            fill
+            className="rounded-full"
+          />
         </Link>
       </div>
       <UserButton afterSignOutUrl="/" />
