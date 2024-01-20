@@ -33,6 +33,10 @@ export async function DELETE(
       where: {
         id,
       },
+      include: {
+        assignments: true,
+        announcements: true,
+      },
     });
     return NextResponse.json("Delete successful", { status: 200 });
   } catch (error: any) {

@@ -32,8 +32,12 @@ const Assignments = ({ params }: { params: { id: string } }) => {
   });
 
   const handleDelete = async (id: string) => {
-    const res = await axios.delete(`/api/teacher/assignment/${id}`);
-    console.log(res.data);
+    try {
+      const res = await axios.delete(`/api/teacher/assignment/${id}`);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // useEffect(() => {
@@ -62,6 +66,11 @@ const Assignments = ({ params }: { params: { id: string } }) => {
               </span>
             </div>
             <span>{ctx.description}</span>
+            <Link href={`/teacher-dashboard/submissions/${ctx.id}`}>
+              <Button size="lg" variant={"link"}>
+                Submissions
+              </Button>
+            </Link>
             <div className="flex justify-start items-center gap-4">
               <Button size="sm">
                 <Link href={`/teacher-dashboard/assignment/edit?id=${ctx.id}`}>

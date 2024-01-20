@@ -28,7 +28,23 @@ import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { updateAssignment } from "@/lib/server/update-assignment";
+import { useQuery } from "@tanstack/react-query";
+const getAssignment = (id: string) => {
+  return fetch(`/api/teacher/assignment/${id}`, {
+    cache: "no-store",
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Failed!");
+      }
 
+      return res.json();
+    })
+    .catch((error) => {
+      console.error(error);
+      // Handle the error as needed
+    });
+};
 const EditAssignment = () => {
   const params = useSearchParams();
   const id = params.get("id");
@@ -38,18 +54,18 @@ const EditAssignment = () => {
     defaultValues: {
       title: "",
       description: "",
-      courseName: "",
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof assignmentSchema>) {
     console.log(values);
-    const res = await axios.post(`/api/teacher/assignment/${id}`, values);
+    const res = await axios.put(`/api/teacher/assignment/${id}`, values);
     console.log(res.data);
 
     form.reset();
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -112,22 +128,7 @@ const EditAssignment = () => {
               )}
             />
           </div>
-          <div className="sm:col-span-3">
-            <FormField
-              control={form.control}
-              name="courseName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Course Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="course name" {...field} />
-                  </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
           <div className="sm:col-span-3">
             <FormField
               control={form.control}

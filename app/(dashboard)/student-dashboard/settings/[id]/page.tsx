@@ -34,8 +34,8 @@ const UpdateProfile = () => {
   const router = useRouter();
 
   const { data, error, isPending } = useQuery({
-    queryKey: ["profile"],
-    queryFn: () => fetch("/api/profile").then((res) => res.json()),
+    queryKey: ["teacherprofile"],
+    queryFn: () => fetch("/api/student/profile").then((res) => res.json()),
   });
 
   console.log(data);
@@ -43,17 +43,17 @@ const UpdateProfile = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: data?.name || "",
+      name: data?.firstName || "",
       email: data?.email || "",
-      image_url: data?.image_url || "",
+      image_url: data?.imageUrl || "",
     },
   });
   useEffect(() => {
     // Update default values when data changes
     form.reset({
-      name: data?.name ?? "",
+      name: data?.firstName ?? "",
       email: data?.email || "",
-      image_url: data?.image_url || "",
+      image_url: data?.imageUrl || "",
     });
   }, [data, form]);
 

@@ -127,33 +127,9 @@ const AddReport = () => {
             />
           </div>
         </div>
-        <AlertDialog>
-          <AlertDialogTrigger
-            className={cn(
-              buttonVariants({ variant: "destructive", size: "lg" })
-            )}
-          >
-            Report
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                type="submit"
-                onClick={form.handleSubmit(onSubmit)}
-              >
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <Button variant={"destructive"} type="submit">
+          Report
+        </Button>
       </form>
     </Form>
   );

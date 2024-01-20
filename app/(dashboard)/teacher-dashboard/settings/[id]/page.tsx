@@ -35,7 +35,7 @@ const UpdateProfile = () => {
 
   const { data, error, isPending } = useQuery({
     queryKey: ["profile"],
-    queryFn: () => fetch("/api/profile").then((res) => res.json()),
+    queryFn: () => fetch("/api/teacher/profile").then((res) => res.json()),
   });
 
   console.log(data);
@@ -60,7 +60,7 @@ const UpdateProfile = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     try {
-      const res = await axios.put(`/api/profile/${data?.id}`, values);
+      const res = await axios.put(`/api/teacher/profile/${data?.id}`, values);
       toast.success(res.data);
       // form.reset()
     } catch (error: any) {

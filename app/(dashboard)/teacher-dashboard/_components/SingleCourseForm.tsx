@@ -138,7 +138,7 @@ const SingleCourseForm = ({ id }: { id: string }) => {
                 <FormItem>
                   <FormLabel>Course Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="MAT-201" {...field} />
+                    <Input placeholder="course code" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

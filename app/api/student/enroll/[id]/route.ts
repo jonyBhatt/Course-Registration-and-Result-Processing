@@ -16,7 +16,7 @@ export async function POST(
       data: {
         courseId: id,
         studnetEmail: user.emailAddresses[0].emailAddress,
-        status: "Pending",
+        status: "PENDING",
       },
     });
     return NextResponse.json("Enrollment send successfully", { status: 201 });

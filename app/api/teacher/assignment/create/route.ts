@@ -14,19 +14,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const assignment = await prisma.teacher.update({
-      where: {
-        email,
-      },
+    const assignment = await prisma.assignment.create({
       data: {
-        assignments: {
-          create: {
-            title,
-            description,
-            dueDate: date,
-            courseName,
-          },
-        },
+        title,
+        description,
+        dueDate: date,
+        courseId,
       },
     });
     console.log(assignment);

@@ -1,9 +1,17 @@
-import React from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from '@/components/ui/button';
+import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import AssignmentForm from "../_components/create-assignment";
-import Assignments from '../_components/show-assignments';
-const Assignment = () => {
+import Assignments from "../_components/show-assignments";
+const Assignment = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+
   return (
     <section>
       <div className="flex items-center justify-between">
@@ -18,16 +26,15 @@ const Assignment = () => {
             <DialogHeader>
               <DialogTitle>Add your Assignments</DialogTitle>
             </DialogHeader>
-            <AssignmentForm />
+            <AssignmentForm id={id} />
           </DialogContent>
         </Dialog>
-
       </div>
-      <div className='py-10'>
-        <Assignments />
+      <div className="py-10">
+        <Assignments params={{ id }} />
       </div>
     </section>
   );
-}
+};
 
-export default Assignment
+export default Assignment;

@@ -29,7 +29,7 @@ const SubmitAssignment = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: async (values: z.infer<typeof formSchema>) =>
-      await axios.post(`/api/teacher/assignment/${id}`, values),
+      await axios.post(`/api/student/assignment/${id}`, values),
     onSuccess: () => {
       toast.success("Announcement create successful");
       form.reset();
@@ -39,6 +39,11 @@ const SubmitAssignment = ({ id }: { id: string }) => {
       toast.error("Something wrong");
     },
   });
+  const handleSubmit = (data: z.infer<typeof formSchema>) => {
+    // Call the mutate function with the form data
+    mutate(data);
+  };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,7 +52,11 @@ const SubmitAssignment = ({ id }: { id: string }) => {
   });
   return (
     <Form {...form}>
-      <form action="" className="space-y-8">
+      <form
+        action=""
+        className="space-y-8"
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
         <FormField
           control={form.control}
           name="submission"
@@ -65,7 +74,7 @@ const SubmitAssignment = ({ id }: { id: string }) => {
             </FormItem>
           )}
         />
-        <Button type="submit" size="lg" className="w-full">
+        <Button type="submit" size="lg" className="w-full" disabled={isPending}>
           Submit
         </Button>
       </form>

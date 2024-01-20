@@ -9,6 +9,11 @@ export const LeftBar = [
     route: "/student-dashboard/mycourses",
     label: "My Courses",
   },
+  {
+    imageUrl: "/faculty.svg",
+    route: "/student-dashboard/faculty",
+    label: "Faculty",
+  },
 
   // {
   //   imageUrl: "/teachers.svg",

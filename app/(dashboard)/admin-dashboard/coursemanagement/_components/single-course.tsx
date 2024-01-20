@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loader from "@/components/Loader";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const SingleCourse = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -15,18 +16,17 @@ const SingleCourse = ({ id }: { id: string }) => {
     queryFn: () => fetch(`/api/admin/course/${id}`).then((res) => res.json()),
   });
 
-  const { mutate } = useMutation({
-    mutationKey: ["deleteCourse"],
-    mutationFn: () => fetch(`/api/admin/course/${id}`, { method: "DELETE" }),
-    onSuccess: () => {
-      toast.success("Delete Course");
-      router.push("/admin-dashboard/coursemanagement");
-      queryClient.invalidateQueries({ queryKey: ["singlecourses"] });
-    },
-    onError: () => {
-      toast.error("Something wrong");
-    },
-  });
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await axios.delete(`/api/admin/course/${id}`);
+      router.push("/admin-dashboard/coursmanagement");
+      console.log(res.data);
+
+      toast.success(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isPending) return <Loader />;
   if (error) return "Something error" + error.message;
@@ -129,7 +129,11 @@ const SingleCourse = ({ id }: { id: string }) => {
             ))}
         </div>
 
-        <Button variant={"destructive"} size={"lg"} onClick={() => mutate()}>
+        <Button
+          variant={"destructive"}
+          size={"lg"}
+          onClick={() => handleDelete(data.id)}
+        >
           Delete Course
         </Button>
       </div>

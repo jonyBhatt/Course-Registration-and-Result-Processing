@@ -74,6 +74,7 @@ model Student {
   enrollment  Enrollment[]
   courses     Course[]
   submissions Submission[]
+  reports     Report[]
 }
 
 model Course {
@@ -105,8 +106,8 @@ model Announcement {
   teacherEmail String
   teacher      Teacher @relation(fields: [teacherEmail], references: [email])
 
-  courseId String @db.ObjectId
-  course   Course @relation(fields: [courseId], references: [id])
+  courseId String? @db.ObjectId
+  course   Course? @relation(fields: [courseId], references: [id])
 }
 
 model Assignment {
@@ -148,7 +149,9 @@ model Report {
   details String
 
   teacherEmail String
-  teacher      Teacher @relation(fields: [teacherEmail], references: [email])
+  teacher      Teacher  @relation(fields: [teacherEmail], references: [email])
+  studentEmail String?
+  student      Student? @relation(fields: [studentEmail], references: [email])
 }
 
 model Enrollment {
